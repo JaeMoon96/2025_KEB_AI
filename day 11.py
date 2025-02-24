@@ -1,4 +1,8 @@
 import numpy as np
-
-v = np.array([1, 3.9, -9, 2])
-print(v, v.ndim)
+import pandas as pd
+df = pd.DataFrame(
+    {     "a" : [4, 5, 6],
+          "b" : [7, 8, 9],
+          "c" : [10, 11, 12]}, index = [1, 2, 3]
+)
+print(df)

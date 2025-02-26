@@ -25,25 +25,31 @@ origin_encoded = encoder.fit_transform(mpg[["origin"]])
 mpg[encoder.get_feature_names_out(["origin"])] = origin_encoded
 mpg.drop(columns=["origin"], inplace=True)
 
+#타겟 및 독립변수 설정
 target_variable = "mpg"
 feature_variables = ["cylinders", "displacement", "horsepower", "weight",
                      "acceleration", "model_year", *encoder.get_feature_names_out(["origin"])]
 X = mpg[feature_variables]
 y = mpg[target_variable]
 
+#트레이닝 / 테스트셋설정
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
+#모델 선택 및 학습
 model = LinearRegression()
 model.fit(X_train, y_train)
 
+# 예측 수행
 y_pred = model.predict(X_test)
 
+#성능 평가(mse,결정계수 R2 등)
 mse = mean_squared_error(y_test, y_pred)
 r2 = r2_score(y_test, y_pred)
 
 print(f"MSE(평균제곱오차): {mse:.2f}")
 print(f"R²(결정계수): {r2:.2f}")
 
+#시각화
 plt.figure(figsize=(8, 6))
 plt.scatter(y_test, y_pred, alpha=0.8)
 plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'r', linestyle='solid')
